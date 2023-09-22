@@ -1,34 +1,35 @@
 package plugin
 
 import (
-	"github.com/ssgo/log"
-	"github.com/ssgo/s"
 	"reflect"
 	"sync"
 )
 
+type ConfigSet struct {
+	Name string
+	Type string
+	Memo string
+}
+
+type Config map[string]interface{}
+
 type Plugin struct {
-	Name    string
-	Objects map[string]interface{}
+	Id        string
+	Name      string
+	Objects   map[string]interface{}
+	ConfigSet []ConfigSet
+	Init      func(map[string]interface{})
 }
 
 type Context struct {
-	Args     map[string]interface{}
-	Logger   *log.Logger
-	Request  *s.Request
-	Response *s.Response
-	injects  map[string]interface{}
-	data     map[string]interface{}
+	injects map[string]interface{}
+	data    map[string]interface{}
 }
 
-func NewContext(args map[string]interface{}, logger *log.Logger, request *s.Request, response *s.Response, injects map[string]interface{}) *Context {
+func NewContext(injects map[string]interface{}) *Context {
 	return &Context{
-		Args:     args,
-		Logger:   logger,
-		Request:  request,
-		Response: response,
-		injects:  injects,
-		data:     map[string]interface{}{},
+		injects: injects,
+		data:    map[string]interface{}{},
 	}
 }
 
