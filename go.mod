@@ -1,3 +1,3 @@
-module github.com/api0-work/plugin
+module github.com/api-go/plugin
 
 go 1.17
