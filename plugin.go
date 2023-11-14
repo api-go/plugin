@@ -18,6 +18,7 @@ type Plugin struct {
 	Name      string
 	Objects   map[string]interface{}
 	ConfigSet []ConfigSet
+	JsCode    string
 	Init      func(map[string]interface{})
 }
 
