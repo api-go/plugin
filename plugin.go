@@ -50,18 +50,18 @@ func (ctx *Context) SetData(k string, v interface{}) {
 	ctx.data[k] = v
 }
 
-var pluginByName = map[string]*Plugin{}
+var pluginById = map[string]*Plugin{}
 var pluginsLock = sync.RWMutex{}
 
 func Register(p Plugin) {
 	pluginsLock.Lock()
 	defer pluginsLock.Unlock()
-	pluginByName[p.Name] = &p
+	pluginById[p.Id] = &p
 }
 
 func Update(plugName, objectName string, value interface{}) {
 	pluginsLock.RLock()
-	p := pluginByName[plugName]
+	p := pluginById[plugName]
 	pluginsLock.RUnlock()
 
 	if p != nil {
@@ -77,17 +77,17 @@ func Update(plugName, objectName string, value interface{}) {
 func List() []Plugin {
 	pluginsLock.RLock()
 	defer pluginsLock.RUnlock()
-	out := make([]Plugin, len(pluginByName))
+	out := make([]Plugin, len(pluginById))
 	i := 0
-	for _, p := range pluginByName {
+	for _, p := range pluginById {
 		out[i] = *p
 		i++
 	}
 	return out
 }
 
-func Get(name string) Plugin {
+func Get(id string) *Plugin {
 	pluginsLock.RLock()
 	defer pluginsLock.RUnlock()
-	return *pluginByName[name]
+	return pluginById[id]
 }
