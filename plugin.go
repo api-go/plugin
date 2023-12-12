@@ -5,21 +5,15 @@ import (
 	"sync"
 )
 
-type ConfigSet struct {
-	Name string
-	Type string
-	Memo string
-}
-
 type Config map[string]interface{}
 
 type Plugin struct {
-	Id        string
-	Name      string
-	Objects   map[string]interface{}
-	ConfigSet []ConfigSet
-	JsCode    string
-	Init      func(map[string]interface{})
+	Id           string
+	Name         string
+	Objects      map[string]interface{}
+	ConfigSample string
+	JsCode       string
+	Init         func(map[string]interface{})
 }
 
 type Context struct {
